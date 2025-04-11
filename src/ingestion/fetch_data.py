@@ -1,26 +1,20 @@
-import os
-import requests
-from src.utils.helpers import setup_logger
+import yfinance as yf
+import pandas as pd
 
-logger = setup_logger(__name__)
+from datetime import datetime
 
-RAW_DIR = "data/raw"
-URL = "http://url-para-dados.csv"
-FILENAME = "dataset.csv"
+def fetch_stock_data(tickers, start = "2020-01-01", end=None):
 
-def fetch_and_save_data():
-    logger.info(f"Baixando dados de {URL}")
-    response = requests(URL)
-    response.raise_for_status()
+    if end is None:
+        end = datetime.today().strftime('%Y-%m-%d')
+        
+    data = {}
+    for ticker in tickers:
+        print(f"Fetching data for {ticker}")
+        df = yf.download(f"{ticker}.SA", start = start, end = end)
+        data[ticker] = df
+    return data
 
-    os.makedirs(RAW_DIR, exist_ok=True)
-    file_path = os.path.join(RAW_DIR, FILENAME)
-
-    with open(file_path, "wb") as f:
-        f.write(response.content)
-
-    logger.info(f"Arquivo salvo em {file_path}")
-    return file_path
-
-if __name__ == "__main__":
-    fetch_and_save_data()
+def save_raw_data(data, output_dir = "data/raw"):
+    for ticker, df in data.items():
+        df.to_csv(f"{output_dir}/{ticker}.csv")
