@@ -128,13 +128,30 @@ celerybeat.pid
 *.sage.py
 
 # Environments
+*.env
 .env
 .venv
+.venv/
 env/
 venv/
 ENV/
 env.bak/
 venv.bak/
+
+# Airflow
+airflow.db
+logs/
+*.log
+
+# VSCode
+.vscode/
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+crash.log
+terraform.tfvars
 
 # Spyder project settings
 .spyderproject
