@@ -1,4 +1,5 @@
 from src.ingestion.fetch_data import fetch_stock_data, save_raw_data
+from src.transformation.clean_data import clean_stock_data
 from src.utils.helpers import setup_logger
 
 def main():
@@ -9,16 +10,23 @@ def main():
     logger.info("Iniciando coleta de dados do Yahoo Finance...")
 
     try:
-        data = fetch_stock_data(tickers)
-        logger.info(f"Dados coletados para {len(data)} ações.")
+        # Etapa 1 - Coleta
+        raw_data = fetch_stock_data(tickers)
+        logger.info(f"{len(raw_data)} ações coletadas com sucesso.")
 
-        # Mostra uma previa dos dados coletados
-        sample_ticker = "PETR4.SA"
-        if sample_ticker in data:
-            print(f"\nPrévia dos dados para {sample_ticker}:\n", data[sample_ticker].head())
+        # Etapa 2 - Salvando dados brutos
+        save_raw_data(raw_data)
+        logger.info("Dados brutos salvos com sucesso.")
 
-        save_raw_data(data)
-        logger.info("Dados salvo com sucesso.")
+        # Etapa 3 - Limpeza e transformação
+        cleaned_data = clean_stock_data(raw_data)
+        logger.info("Dados limpos com sucesso.")
+
+        # Exibir preview dos dados limpos
+        for ticker, df in cleaned_data.items():
+            logger.info(f"Preview de {ticker}:")
+            print(df.head())
+
     except Exception as e:
         logger.error(f"Erro ao executar a ingestão: {e}")
 
