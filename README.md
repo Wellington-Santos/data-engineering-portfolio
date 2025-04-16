@@ -1,6 +1,7 @@
 # Data Engineering Portfolio
 
-Este projeto tem como objetivo demonstrar habilidades práticas em engenharia de dados através da construção de uma pipeline ETL modular. A solução inclui orquestração com Airflow, provisionamento de infraestrutura com Terraform e automação com CI/CD via GitHub Actions.
+Este projeto tem como objetivo demonstrar habilidades práticas em engenharia de dados através da construção de uma pipeline ETL modular.
+A solução inclui orquestração com Airflow, provisionamento de infraestrutura com Terraform e automação com CI/CD via GitHub Actions.
 
 ## 🧱 Estrutura do Projeto
 
@@ -10,6 +11,16 @@ Este projeto tem como objetivo demonstrar habilidades práticas em engenharia de
 - `terraform/`: Arquivos de infraestrutura como código.
 - `tests/`: Testes unitários dos scripts.
 - `.github/workflows/`: Pipeline de automação com GitHub Actions.
+
+data-engineering-portfolio/  
+├── data/ # Dados em diferentes estágios (raw, staging, processed)  
+├── dags/ # DAGs do Apache Airflow  
+├── src/ # Scripts de ingestão, transformação e carga  
+├── terraform/ # Infraestrutura como código (IaC)  
+├── tests/ # Testes unitários com Pytest  
+├── .github/workflows/ # Pipeline CI com GitHub Actions  
+├── requirements.txt # Dependências do projeto  
+└── README.md  
 
 ## 🚀 Como executar localmente
 
@@ -23,3 +34,22 @@ pip install -r requirements.txt
 
 # Execute os scripts diretamente (exemplo)
 python src/ingestion/fetch_data.py
+
+```
+
+## ✅ Funcionalidades implementadas
+* Ingestão de dados do Yahoo Finance
+
+* Limpeza e padronização dos dados
+
+* Cálculo de variação percentual diária
+
+* Cálculo de médias móveis (MM7 e MM21)
+
+* Detecção de quedas maiores que 5%
+
+* Exportação dos dados processados por ação
+
+* Testes unitários com Pytest
+
+* Pipeline CI com cobertura de testes
