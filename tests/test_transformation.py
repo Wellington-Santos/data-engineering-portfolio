@@ -1,6 +1,6 @@
 import pandas as pd
 from src.transformation.clean_data import clean_stock_data
-from src.transformation.enrichment import add_price_variation
+from src.transformation.enrichment import (add_price_variation, add_moving_averages, flag_price_drop)
 
 def test_clean_data():
     # Mock de um DataFrame:
@@ -41,3 +41,24 @@ def test_add_price_variation():
     assert "Daily_Change_%" in enriched.columns
     assert round(enriched["Daily_Change_%"].iloc[1], 2) == 10.0
     assert round(enriched["Daily_Change_%"].iloc[2], 2) == -10.0
+
+def test_add_moving_averages():
+    df = pd.DataFrame({
+        "Close": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    })
+
+    result = add_moving_averages(df)
+    assert "MM7" in result.columns
+    assert "MM21" in result.columns
+    assert result["MM7"].iloc[6] == round(sum([1,2,3,4,5,6,7])/7, 2)
+    assert result["MM21"].iloc[6] == 0.0
+
+
+def test_flag_price_drop():
+    df = pd.DataFrame({
+        "Daily_Change_%": [0.0, -2.0, -5.1, -6.5, 1.0]
+    })
+
+    result = flag_price_drop(df)
+    assert "Alert_Flag" in result.columns
+    assert result["Alert_Flag"].tolist() == [False, False, True, True, False]

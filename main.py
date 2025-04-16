@@ -50,9 +50,9 @@ import pandas as pd
 
 from src.ingestion.fetch_data import fetch_stock_data, save_raw_data
 from src.transformation.clean_data import clean_stock_data
-from src.transformation.enrichment import add_price_variation
 from src.loading.save_data import save_processed_data
-from src.utils.helpers import setup_logger, normalize_dataframe
+from src.utils.helpers import setup_logger
+from src.transformation.enrichment import (add_price_variation, add_moving_averages, flag_price_drop)
 
 def main():
     logger = setup_logger("main_logger")
@@ -65,7 +65,15 @@ def main():
 
         # Exibir variação percentual das ações
         for ticker, df in cleaned_data.items():
+            
+            # Calcula a variação percentual diária
             df = add_price_variation(df)
+
+            # Calcula o valor médio das ações entre 7 e 21 dias
+            df = add_moving_averages(df)
+
+            # Analise as médias diárias e aponta as quedas maiores que 5%
+            df = flag_price_drop(df)
 
             # Salva os arquivos processados
             save_processed_data(df, ticker)
