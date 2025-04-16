@@ -1,5 +1,6 @@
 import pandas as pd
 from src.transformation.clean_data import clean_stock_data
+from src.transformation.enrichment import add_price_variation
 
 def test_clean_data():
     # Mock de um DataFrame:
@@ -26,3 +27,17 @@ def test_clean_data():
     assert not cleaned_df.isnull().values.any()
     assert "Date" in cleaned_df.columns
     assert pd.to_datetime(cleaned_df["Date"]).dtype == "datetime64[ns]"
+
+
+def test_add_price_variation():
+    df = pd.DataFrame({
+        "Date": ["2024-01-01", "2024-01-02", "2024-01-03"],
+        "Close": [100, 110, 99]
+    })
+
+    df["Date"] = pd.to_datetime(df["Date"])
+    enriched = add_price_variation(df)
+
+    assert "Daily_Change_%" in enriched.columns
+    assert round(enriched["Daily_Change_%"].iloc[1], 2) == 10.0
+    assert round(enriched["Daily_Change_%"].iloc[2], 2) == -10.0

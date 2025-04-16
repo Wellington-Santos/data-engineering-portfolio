@@ -1,8 +1,9 @@
-# import sys
 import os
+import pandas as pd
+from unittest.mock import patch
+
 from src.ingestion.fetch_data import fetch_stock_data, save_raw_data
 
-# sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 def test_fetch_stock_data():
     tickers = ["ITUB4", "PETR4"]
@@ -19,3 +20,13 @@ def test_save_raw_data(tmp_path):
         file_path = tmp_path / f"{ticker}.csv"
         assert file_path.exists()
         assert file_path.stat().st_size > 0
+
+@patch("yfinance.download")
+def test_fetch_stock_data_with_mock(mock_download):
+    # Simula retorno de um DataFrame
+    mock_df = pd.DataFrame({"Close": [10, 11]})
+    mock_download.return_value = mock_df
+
+    data = fetch_stock_data(["MOCK11"])
+    assert "MOCK11" in data
+    assert data["MOCK11"].equals(mock_df)

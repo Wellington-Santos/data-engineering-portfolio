@@ -3,7 +3,7 @@ import yfinance as yf
 import pandas as pd
 
 from datetime import datetime
-from src.utils.helpers import setup_logger
+from src.utils.helpers import setup_logger, normalize_dataframe
 
 logger = setup_logger(__name__)
 
@@ -35,9 +35,12 @@ def save_raw_data(data, output_dir = "data/raw"):
 
     for ticker, df in data.items():
         try:
+            df = normalize_dataframe(df,ticker)
+
             file_path = os.path.join(output_dir, f"{ticker}.csv")
-            df.to_csv(file_path)
+            df.to_csv(file_path, index = False)
 
             logger.info(f"Dados brutos salvos em {file_path}")
+
         except Exception as e:
             logger.error(f"Erro ao salvar dados de {ticker}: {e}")
