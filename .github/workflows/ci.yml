@@ -1,0 +1,33 @@
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🔄 Checkout do código
+        uses: actions/checkout@v3
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+
+      - name: 📦 Instalar dependências
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: ✅ Rodar testes com cobertura
+        run: |
+          pytest --cov=src --cov-report=term-missing
+
+      # (Opcional) - Linting com ruff ou flake8
+      # - name: 🔍 Verificar lint com flake8
+      #   run: |
+      #     pip install flake8
+      #     flake8 src tests
