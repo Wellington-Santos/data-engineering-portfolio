@@ -9,20 +9,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🔄 Checkout do código
+      - name: Checkout do código
         uses: actions/checkout@v3
 
-      - name: 🐍 Setup Python
+      - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.12"
 
-      - name: 📦 Instalar dependências
+      - name: Instalar dependências
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: ✅ Rodar testes com cobertura
+      - name: Rodar testes com cobertura
         run: |
           pytest --cov=src --cov-report=term-missing
 
