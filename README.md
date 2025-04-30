@@ -81,4 +81,4 @@ python src/ingestion/fetch_data.py
 
 ## 🙋‍♂️ Contato
 Desenvolvido por Wellington S. Santos.  
-LinkedIn (www.linkedin.com/in/wellington-s-santos) • GitHub
+[LinkedIn](www.linkedin.com/in/wellington-s-santos) 
