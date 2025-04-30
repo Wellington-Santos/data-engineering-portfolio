@@ -53,3 +53,32 @@ python src/ingestion/fetch_data.py
 * Testes unitários com Pytest
 
 * Pipeline CI com cobertura de testes
+
+## 🔧 Tecnologias Utilizadas
+* Python
+
+* Pandas
+
+* yFinance
+
+* Apache Airflow
+
+* Terraform (simulado)
+
+* GitHub Actions (CI)
+
+* Pytest / Pytest-cov
+
+## 📌 Próximos passos
+* Upload dos arquivos para Amazon S3
+
+* Orquestração do ETL com Airflow (a cada 2 dias)
+
+* Construção de dashboard para visualização de indicadores
+
+## 📄 Licença
+* Distribuído sob a licença Apache 2.0. Veja LICENSE para mais informações.
+
+## 🙋‍♂️ Contato
+Desenvolvido por [Seu Nome].
+LinkedIn • GitHub
