@@ -80,5 +80,5 @@ python src/ingestion/fetch_data.py
 * Distribuído sob a licença Apache 2.0. Veja LICENSE para mais informações.
 
 ## 🙋‍♂️ Contato
-Desenvolvido por [Seu Nome].
-LinkedIn • GitHub
+Desenvolvido por Wellington S. Santos.  
+LinkedIn (www.linkedin.com/in/wellington-s-santos) • GitHub
